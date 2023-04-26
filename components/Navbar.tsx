@@ -8,11 +8,13 @@ import { BiSearch } from 'react-icons/bi'
 import { IoMdAdd } from 'react-icons/io'
 import Logo from '../utils/tiktik-logo.png'
 import { createOrGetUser } from '@/utils';
+import {useAuth} from '../context/AuthContext'
 
 
 
 const Navbar = () => {
-  const user = false
+
+  const {userProfile, addUser} = useAuth()
   return (
     <div className='w-fullflex justify-between 
       items-center border-b-2 border-gray-200 py-2 px-4' >
@@ -28,12 +30,18 @@ const Navbar = () => {
       </Link>
       <div>Search</div>
       <div>
-        {user ? (
-          <div>Logged in</div>
+        {userProfile ? (
+          <div className='flex gap-5 md:gap-10'>
+            <Link href='./upload'>
+              <button id="text">Add
+                <IoMdAdd className='text-xl'/>
+              </button>
+            </Link>
+          </div>
         ) : (
           <GoogleLogin 
             onSuccess={response => {
-              createOrGetUser(response);
+              createOrGetUser(response, addUser);
             }}
             onError={() => {
               console.log('Login Failed');

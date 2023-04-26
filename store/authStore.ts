@@ -14,3 +14,5 @@ const useAuthStore = create(
     name: 'auth'
   })
 )
+
+export default useAuthStore
